@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+#contenedor {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#bloc_esquerra {
+    width: 30%;
+    background-color: #f8d7da;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #ccc;
+}
+
+#cabecera {
+    background-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#cabecera select,
+#cabecera input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+#ver_notas {
+    flex-grow: 1;
+    background-color: #f8d7da;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow-y: auto; 
+    max-height: 100%; 
+}
+
+#per_boto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+#netejar {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.drag-over {
+    background-color: #f1c4c8 !important;
+    border: 2px dashed #d9534f !important;
+}
+
+#drop_here {
+    background-color: rgb(184, 235, 235);
+    padding: 10px;
+    text-align: center;
+    border: 2px dashed #ccc;
+    margin-top: 10px;
+    height: 3rem;
+}
+.encima{
+    background-color: rgb(222, 104, 179);
+}
+
+#map {
+    width: 70%;
+    height: 100%;
+}
+
+#espai_bandera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%; 
+}
+
+.bandera {
+    width: 15px;
+    height: 15px;
+}
+
+.ciutat {
+    margin-left: auto; 
+}
+
+.punt-result {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative; 
+}
+
+.punt-result h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.punt-result p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+.punt-result:first-child {
+    margin-top: -14px; 
+}
+
+.punt-espai,
+.punt-atraccio,
+.punt-museu {
+    background-color: #78f4e2; 
+    width: calc(100% + 40px); 
+    margin: 0 -20px 4px; 
+    box-sizing: border-box; 
+}
+
+.punt-atraccio {
+    background-color: #e9ff80;
+}
+
+.punt-museu {
+    background-color: #ffcc80;
+}
+
+.delete-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    right: 10px; 
+    top: 10px; 
+}
+
+.delete-btn:hover {
+    background-color: #ff4b4b;
+}

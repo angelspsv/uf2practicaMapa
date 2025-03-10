@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP</title>
+    <link rel="stylesheet" href="mapaCss.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""></script>
+</head>
+<body>
+    <div id="contenedor">
+        <div id="bloc_esquerra">
+            <div id="espai_bandera">
+                <span src="" class="pais"></span>
+                <img src="" class="bandera">
+                <span src="" class="parentesis"></span>
+                <span src="" class="ciutat"></span>
+            </div>
+            <div id="cabecera">
+                <label for="tipus">Tipus:</label>
+                <select id="tipus"></select>
+                <label for="ordenacio">Ordenació:</label>
+                <select id="ordenacio">
+                    <option value="asc">Ascendent</option>
+                    <option value="dsc">Descendent</option>
+                </select>
+                <input type="text" id="filtrar" placeholder="Filtrar per nom...">
+            </div>
+            <div id="ver_notas">No hi ha informació per mostrar</div>
+            <div id="per_boto">
+                <span id="total">Número total:</span>
+                <button id="netejar">Netejar tot</button>
+            </div>
+            <div id="drop_here" class="dropZone">Arrossegar un fitxer CSV aquí per carregar la informació</div>
+        </div>
+        <div id="map"></div>
+    </div>
+    
+    <script type="module" src="scripts/Mapa.js"></script>
+    <script type="module" src="scripts/mapa_app.js"></script>
+</body>
+</html>
