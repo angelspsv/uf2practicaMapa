@@ -42,6 +42,24 @@ const inputText = document.getElementById('filtrar');
 //declarem el mapa
 const mapa = new Mapa();
 
+
+//funcionalitat Netejar tot
+//faig la varaible del boto per esborrar-ho tot (punts d'interes i el contador)
+let prueba = "";
+const btnNetejar = document.getElementById("netejar");
+btnNetejar.addEventListener("click", function () {
+    console.log("S'ha fet clic en el botó Netejar!");
+    //posem toto a zero
+    mostraPuntsTuristicsLlista(prueba);
+    numPunts(prueba);
+    //esborrem punts del mapa
+    mapa.borrarPunt();
+    //tornem a mostrar el punt actual
+    mapa.mostrarPuntInicial();
+});
+
+
+
 //faig un punt de prova
 //mapa.mostrarPunt(39.96, 4.08, "El paradis!");   //Menorca
 
@@ -208,7 +226,6 @@ function puntsAlMapa(objsTuristics){
 }
 
 
-
 //funcio que rep un array de instancies i mostrara cadascuna d'aquestes 
 //en un contenidor amb les seves caracteristiques segons: espai, atraccio, museu
 function mostraPuntsTuristicsLlista(objCreats){
@@ -252,7 +269,7 @@ function mostraPuntsTuristicsLlista(objCreats){
         }
         //si puntTuristic es ATRACCIO mostra: ciutat, tipus, horari, preu
         if(objCreat.tipus === 'Atraccio'){
-            infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus} | Horaris: ${objCreat.horaris} | Preu: ${objCreat.preu}${objCreat.moneda}(IVA)`;
+            infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus} | Horaris: ${objCreat.horaris} | Preu: ${objCreat.getPreuIva()}`;
             puntDiv.classList.add('punt-atraccio');
         }
         //si puntTuristic es MUSEU mostra: ciutat, tipus, horari, descripcio
@@ -261,7 +278,8 @@ function mostraPuntsTuristicsLlista(objCreats){
             const descripcio = document.createElement('span');
             descripcio.innerHTML = `Descripció: ${objCreat.descripcio}`;
             //preparem el text que es veura per el punt turistic de Museu
-            infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus} | Horaris: ${objCreat.horaris} | Preu: ${objCreat.preu}${objCreat.moneda}(IVA)`;
+            infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus} | Horaris: ${objCreat.horaris} | Preu: ${objCreat.getPreuIva()}`;
+            
             //element de salt de linia
             infoPunt.appendChild(document.createElement('br'));
             infoPunt.appendChild(descripcio);
