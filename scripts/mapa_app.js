@@ -45,13 +45,13 @@ const mapa = new Mapa();
 
 //funcionalitat Netejar tot
 //faig la varaible del boto per esborrar-ho tot (punts d'interes i el contador)
-let prueba = "";
 const btnNetejar = document.getElementById("netejar");
 btnNetejar.addEventListener("click", function () {
     console.log("S'ha fet clic en el botó Netejar!");
-    //posem toto a zero
-    mostraPuntsTuristicsLlista(prueba);
-    numPunts(prueba);
+    //buidem l'array per posar-ho tot a zero
+    objectesCreats.length = 0;
+    mostraPuntsTuristicsLlista(objectesCreats);
+    numPunts(objectesCreats);
     //esborrem punts del mapa
     mapa.borrarPunt();
     //tornem a mostrar el punt actual
