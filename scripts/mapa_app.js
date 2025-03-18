@@ -15,10 +15,10 @@ const tipusOpcions = new Set();
 const selectTipus = document.getElementById('tipus');
 
 //variables per mostrar bandera i ciutat
-const paisBandera = document.querySelector('.bandera');
-const nomCiutat = document.querySelector('.ciutat');
 const paraPais = document.querySelector('.pais');
+const paraBandera = document.querySelector('.bandera');
 const paraParentesis = document.querySelector('.parentesis');
+const paraCiutat = document.querySelector('.ciutat');
 let pais_codi = "";
 let pais_ciutat = "";
 
@@ -121,9 +121,10 @@ const loadFile = function(files){
             //fem una instancia de la API de FileReader
             const reader = new FileReader();
             //definim un esdeveniment que s'executa quan el fitxer s'ha llegit completament
-            reader.onload = function(e){
+            reader.onload = function(){
                 //obtenim el contingut del fitxer
-                const text = e.target.result; 
+                const text = reader.result;
+                console.log(`Contingut del fitxer: ${text}`);
                 
                 //per eliminar espais i les linies buides 
                 //dividim el text linia per linia
@@ -201,6 +202,9 @@ const loadFile = function(files){
                     puntsAlMapa(objectesCreats);
                 }
             };
+            reader.onerror = function(){
+                showMessage("Error al llegir el fitxer.", "error");
+            }
             //comença lectura del fitxer com a text
             reader.readAsText(file);
         });
@@ -401,25 +405,18 @@ async function banderaPais(codi_pais, pais_ciutat){
         //mostrem tot l'objecte
         console.log('mostrem tot el objecte', dataPais);
 
-        //cercar la bandera
-        //es un objecte amb elements clau-valor
-        paisBandera.src = dataPais[0].flags.png;
-
-        paraPais.textContent = 'País(';
+        //mostrem pais, bandera i ciutat dalt de tot
+        paraPais.textContent = 'País (';
+        paraBandera.src = dataPais[0].flags.png;
         paraParentesis.textContent = ')';
-
-        //s'ha d'agafar des del fitxer csv
-        nomCiutat.textContent = pais_ciutat;
+        //s'ha d'agafar des del fitxer csv i arriba com parametre
+        paraCiutat.textContent = pais_ciutat;
     
         //cercar les coordenades del pais
         //el camp latlng es un array de dos valors
         let tmp_lat = dataPais[0].latlng[0];
         let tmp_long = dataPais[0].latlng[1];
         console.log(`lat: ${tmp_lat} i lng: ${tmp_long}`);
-        
-        //obtenim nom del pais
-        let nom_del_pais = dataPais[0].altSpellings[2];
-        console.log('Pais:', nom_del_pais);
 
         //actualitzem instancia del mapa segons les dades del fitxer csv
         mapa.actualizarPosInitMapa(tmp_lat, tmp_long);
