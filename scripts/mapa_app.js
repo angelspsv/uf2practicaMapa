@@ -3,6 +3,10 @@ import { PuntInteres } from "./PuntInteres.js";
 import { Museu } from "./Museu.js";
 import { Atraccio } from "./Atraccio.js";
 
+//declarem el mapa
+const mapa = new Mapa();
+
+
 //aqui es veuran les instancies d'espai, atraccio i/o museu
 const contenidorPunts = document.getElementById('ver_notas');
 
@@ -39,10 +43,6 @@ const selectOrdenacio = document.getElementById("ordenacio");
 const inputText = document.getElementById('filtrar');
 
 
-//declarem el mapa
-const mapa = new Mapa();
-
-
 //funcionalitat Netejar tot
 //faig la varaible del boto per esborrar-ho tot (punts d'interes i el contador)
 const btnNetejar = document.getElementById("netejar");
@@ -50,6 +50,13 @@ btnNetejar.addEventListener("click", function () {
     console.log("S'ha fet clic en el botó Netejar!");
     //buidem l'array per posar-ho tot a zero
     objectesCreats.length = 0;
+    //netegem els elements de pais, bandera i ciutat carregats des del fitxer csv
+    paraPais.textContent = "";
+    paraBandera.src = "";  
+    paraParentesis.textContent = "";
+    paraCiutat.textContent = "";
+
+    //tornem a carregar les dades actuals per la llista de punts turistics i el número de punts
     mostraPuntsTuristicsLlista(objectesCreats);
     numPunts(objectesCreats);
     //esborrem punts del mapa
@@ -267,17 +274,17 @@ function mostraPuntsTuristicsLlista(objCreats){
         const infoPunt = document.createElement('p');
 
         //si puntTuristic es ESPAI mostra: ciutat i tipus
-        if(objCreat.tipus === 'Espai'){
+        if(objCreat.tipus.toLowerCase() === 'espai'){
             infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus}`;
             puntDiv.classList.add('punt-espai');
         }
         //si puntTuristic es ATRACCIO mostra: ciutat, tipus, horari, preu
-        if(objCreat.tipus === 'Atraccio'){
+        if(objCreat.tipus.toLowerCase() === 'atraccio'){
             infoPunt.textContent = `${objCreat.ciutat} | Tipus: ${objCreat.tipus} | Horaris: ${objCreat.horaris} | Preu: ${objCreat.getPreuIva()}`;
             puntDiv.classList.add('punt-atraccio');
         }
         //si puntTuristic es MUSEU mostra: ciutat, tipus, horari, descripcio
-        if(objCreat.tipus === 'Museu'){
+        if(objCreat.tipus.toLowerCase() === 'museu'){
             //faig un element span amb descripcio per dividir el contingut en dos linies
             const descripcio = document.createElement('span');
             descripcio.innerHTML = `Descripció: ${objCreat.descripcio}`;
