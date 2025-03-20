@@ -435,20 +435,23 @@ function deleteThisPuntTuristic(id_boto){
         return;
     }
 
-    //filtrem l' array per eliminar el objete amb ID entrat
-    const index = objectesCreats.findIndex(obj => obj.getId() === id_boto);
-    if (index !== -1) {
-        objectesCreats.splice(index, 1);
-        console.log(`Punt turístic amb ID ${id_boto} eliminat.`);
-    } else {
-        console.log(`No s'ha trobat cap punt turístic amb ID ${id_boto}.`);
+    //abans d'esborrar cal confirmar la decisio
+    if(confirm("Estàs segur que vols eliminar el punt d'interès?")){
+        //filtrem l' array per eliminar el objete amb ID entrat
+        const index = objectesCreats.findIndex(obj => obj.getId() === id_boto);
+        if (index !== -1) {
+            objectesCreats.splice(index, 1);
+            console.log(`Punt turístic amb ID ${id_boto} eliminat.`);
+        } else {
+            console.log(`No s'ha trobat cap punt turístic amb ID ${id_boto}.`);
+        }
+        console.log('Qué pasa con los objetos disponibles: ', objectesCreats);
+        //despres d'esborrar caldra actualitzar la llista de punts i mapa
+        //i el nombre total de punts disponibles en la llista de punts
+        mostraPuntsTuristicsLlista(objectesCreats);
+        puntsAlMapa(objectesCreats);
+        numPunts(objectesCreats);
     }
-    console.log('Qué pasa con los objetos disponibles: ', objectesCreats);
-    //despres d'esborrar caldra actualitzar la llista de punts i mapa
-    //i el nombre total de punts disponibles en la llista de punts
-    mostraPuntsTuristicsLlista(objectesCreats);
-    puntsAlMapa(objectesCreats);
-    numPunts(objectesCreats);
 }
 
 
