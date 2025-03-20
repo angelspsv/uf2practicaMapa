@@ -517,11 +517,21 @@ inputText.addEventListener('input', function(){
 function buscarEnLlista(objectes, text_entrat){
     let text_cerca = text_entrat.toLowerCase().trim();
 
-    //obtenim el resultat de filtrar els objectes segons el nom i el text cercat
-    let objsFiltrats = objectes.filter(obj => obj.nom.toLowerCase().includes(text_cerca));
+    //si text entrat es major a 3 lletres
+    if(text_cerca.length > 3){
+        //obtenim el resultat de filtrar els objectes segons el nom i el text cercat
+        let objsFiltrats = objectes.filter(function(obj){
+            return obj.nom.toLowerCase().includes(text_cerca);
+        });
 
-    //cridem les funcions per actualitzar: llista, punts del mapa i nombre de items en la llista
-    mostraPuntsTuristicsLlista(objsFiltrats);
-    puntsAlMapa(objsFiltrats);
-    numPunts(objsFiltrats);
+        //cridem les funcions per actualitzar: llista, punts del mapa i nombre de items en la llista
+        mostraPuntsTuristicsLlista(objsFiltrats);
+        puntsAlMapa(objsFiltrats);
+        numPunts(objsFiltrats);
+    }else{
+        //si text es menor o igual a 3 chars, mostrem tot igual que al començament
+        mostraPuntsTuristicsLlista(objectes);
+        puntsAlMapa(objectes);
+        numPunts(objectes);
+    }
 }
