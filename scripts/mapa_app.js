@@ -469,15 +469,23 @@ selectOrdenacio.addEventListener("change", function(){
 
 
 //funcio per ordenar la llista segons l'opcio seleccionada
+//la funcio LOCALECOMPARE funciona molt be per comparar paraules accentuades
 function ordenarLlista(llista, ordre) {
     if (!llista || llista.length === 0) return;
 
     //ordena ascendent o descendent segons el nom
     llista.sort((a, b) => {
+        //abans pasem tot a minuscules
+        let nomA = a.nom.toLowerCase();
+        let nomB = b.nom.toLowerCase();
+
         if (ordre === "asc") {
-            return a.nom.localeCompare(b.nom); // A-Z
+            //si A < B -> -1; si A > B -> 1 i si cap de les altres: 0
+            return nomA < nomB ? -1 : nomA > nomB ? 1 : 0; // A-Z
         } else {
-            return b.nom.localeCompare(a.nom); // Z-A
+            //ordena descendentment
+            //si A>B -> -1; si A<B -> 1 i si cap de les altres: 0
+            return nomA > nomB ? -1 : nomA < nomB ? 1 : 0; // Z-A
         }
     });
     //tornem a renderitzar la llista
