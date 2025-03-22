@@ -2,6 +2,7 @@ import { Mapa } from "./Mapa.js";
 import { PuntInteres } from "./PuntInteres.js";
 import { Museu } from "./Museu.js";
 import { Atraccio } from "./Atraccio.js";
+import { Excel } from "./Excel.js";
 
 //declarem el mapa
 const mapa = new Mapa();
@@ -46,7 +47,7 @@ const inputText = document.getElementById('filtrar');
 //funcionalitat Netejar tot
 //faig la varaible del boto per esborrar-ho tot (punts d'interes i el contador)
 const btnNetejar = document.getElementById("netejar");
-btnNetejar.addEventListener("click", function () {
+btnNetejar.addEventListener("click", function(){
     console.log("S'ha fet clic en el botó Netejar!");
     //buidem l'array per posar-ho tot a zero
     objectesCreats.length = 0;
@@ -74,26 +75,26 @@ btnNetejar.addEventListener("click", function () {
 const dropZoneObj = document.querySelector('.dropZone');
 
 //evitar que el navegador faci events de drag & drop en tota la pagina
-document.addEventListener("dragover", function (event) {
+document.addEventListener("dragover", function(event){
     event.preventDefault();
     event.stopPropagation();
 });
 //s'executa quan deixem un fitxer en qualsevol lloc de la web
 //aixi evitem que el fitxer csv s'obris en una pestanya del nav
-document.addEventListener("drop", function (event) {
+document.addEventListener("drop", function(event){
     event.preventDefault();
     event.stopPropagation();
 });
 //efecte visual quan un fitxer arriba a la zona de carga
-dropZoneObj.addEventListener("dragenter", function () {
+dropZoneObj.addEventListener("dragenter", function(){
     dropZoneObj.classList.add("drag-over");
 });
 //treu el efecte visual activat quan el fitxer surt de la zona de carga
-dropZoneObj.addEventListener("dragleave", function () {
+dropZoneObj.addEventListener("dragleave", function(){
     dropZoneObj.classList.remove("drag-over");
 });
 //s'executa quan deixem caure un fitxer a la zona de carga
-dropZoneObj.addEventListener("drop", function (event) {
+dropZoneObj.addEventListener("drop", function(event){
     event.preventDefault();
     //eliminem el efecte visial ja que l'usuari ja ha deixat caure el fitxer
     dropZoneObj.classList.remove("drag-over");
@@ -199,6 +200,12 @@ const loadFile = function(files){
                     //cridem la funcio asincrona per mostrar la bandera i ciutat dels monuments del fitxer csv processat
                     (async function() {
                         await banderaPais(pais_codi, pais_ciutat);
+
+                        //aqui a mode de prova cridarem el metode asincron de la classe Excel: getInfoCountry(codi, city)
+                        //!! previament s'ha de fer una instancia de la classe Excel
+                        const excel = new Excel();
+                        const infoPais = await excel.getInfoCountry(pais_codi, pais_ciutat);
+                        console.log("Objecte retornat despres d'executar el metode getInfoCountry de la classe Excel: ", infoPais);
                     })();
 
                     console.log(`Els objectes que rebra puntsAlMapa; ${objectesCreats}`);
@@ -503,7 +510,7 @@ selectTipus.addEventListener('change', function(){
 function filtrarPerTipus(objectes, tipusSeleccionat) {
     let objectesFiltrats;
     //filtrem els punts turistics segons l'opcio triada del select
-    if (tipusSeleccionat === "tots") {
+    if (tipusSeleccionat.toLowerCase() === "tots") {
         objectesFiltrats = objectes;
     } else {
         objectesFiltrats = objectes.filter(obj => obj.tipus.toLowerCase() === tipusSeleccionat);
