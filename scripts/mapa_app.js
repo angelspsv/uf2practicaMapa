@@ -110,7 +110,8 @@ dropZoneObj.addEventListener("drop", function(event){
 
 
 // FUNCIONS
-//funcionalitat que carga el fitxer
+//funcionalitat que carga el fitxer, confirma si fitxer es csv i el llegeix
+/*
 const loadFile = function(files){
     //si files no esta buit i esta major a 0
     if(files && files.length > 0){
@@ -224,6 +225,131 @@ const loadFile = function(files){
         });
     }
 }
+*/
+
+//----------------- funcio loadFile utilitza la classe Excel------
+
+//funcio que carga, confirma si fitxer es csv i el llegeix
+const loadFile = function(files) {
+    //si files no esta buit i es major a 0
+    if (files && files.length > 0) {
+        //bucle per recorrer tots els fitxers arrossegats
+        Array.from(files).forEach(async function(file) {
+            console.log(file);
+            //mirem quina es l'extensio del fitxer
+            const extensio = file.name.split(".")[1];
+            if (extensio.toLowerCase() === "csv"){
+                console.log('Extensió correcta');
+                //fem una instancia de la classe Excel amb el fitxer correcte
+                const excel = new Excel(file);
+                try {
+                    const dadesCSV = await excel.readCSV();
+                    console.log("Dades del CSV:", dadesCSV);
+
+
+                    //aqui fem servir la funcio FileReader() per llegir el fitxer csv entrat
+                    //fem una instancia de la API de FileReader
+                    const reader = new FileReader();
+                    //definim un esdeveniment que s'executa quan el fitxer s'ha llegit completament
+                    reader.onload = function(){
+                        //obtenim el contingut del fitxer
+                        const text = reader.result; 
+                
+                        //per eliminar espais i les linies buides 
+                        //dividim el text linia per linia
+                        const liniesBrutes = text.split("\n");
+                        const liniesNetes = liniesBrutes.map(function(lin) {
+                            return lin.trim();
+                        });
+                        //filtrem les linies buides
+                        const linies = liniesNetes.filter(function(lin) {
+                            return lin !== ""; 
+                        });
+
+                        //analitzem el fitxer per esbrinar quin tipus de separador fa servir
+                        if (linies.length > 0 && linies[0]){
+                            let delimitador = linies[0].includes(";") ? ";" : 
+                                        linies[0].includes("\t") ? "\t" : 
+                                        linies[0].includes("|") ? "|" : ",";
+                
+                            const headers = linies[0].split(delimitador).map(function(h) {
+                                return h.trim();
+                            });
+                
+                            console.log("Noms de les columnes:", headers);
+
+                            //processem el contingut del fitxer csv
+                            //fem un array
+                            for (let i = 1; i < linies.length; i++) {
+                                let valores = linies[i].split(delimitador).map(function(v) {
+                                    return v.trim();
+                                });
+
+                                //creacio del objete dinamicament
+                                let fila = {};
+                                headers.forEach(function (header, index) {
+                                    fila[header] = valores[index] || "";
+                                });
+
+                                //mirem que conte cada fila i les variables pais_codi i pais_ciutat
+                                console.log(fila);
+                                pais_codi = fila.codi;
+                                pais_ciutat = fila.ciutat;
+                                console.log(pais_codi);
+                                console.log(pais_ciutat);
+
+                                //processem les dades i fem la instancia corresponent
+                                const objCreat = processObject(fila);
+                                if (objCreat) {
+                                    objectesCreats.push(objCreat);
+                                }
+                            }
+                            console.log("Objectes processats:", objectesCreats);
+
+                            //cridem la funcio per afegir els tipus al select desplegable
+                            tipusDeOpcions(objectesCreats);
+
+                            //afegim la bandera del pais i nom de la ciutat dels llocs turistics
+                            console.log("Código del país:", pais_codi);
+                            console.log("Ciudad del país:", pais_ciutat);
+
+                            //si estan buits, exit!
+                            if(!pais_ciutat || !pais_codi){
+                                console.log('codi_pais o ciutat_pais estan buits!');
+                                return;
+                            }
+                            //cridem la funcio asincrona per mostrar la bandera i ciutat dels monuments del fitxer csv processat
+                            (async function() {
+                                await banderaPais(pais_codi, pais_ciutat);
+
+                                //prova de la classe Excel
+                                const infoPais = await excel.getInfoCountry(pais_codi, pais_ciutat);
+                                console.log("Objecte retornat despres d'executar el metode getInfoCountry de la classe Excel: ", infoPais);
+                            })();
+
+                            console.log(`Els objectes que rebra puntsAlMapa; ${objectesCreats}`);
+                            //aqui cridarem la funcio mostraPuntsTuristics
+                            mostraPuntsTuristicsLlista(objectesCreats);
+
+                            //cridem funcio per mostrar els punts turistics en el mapa
+                            puntsAlMapa(objectesCreats);
+                        }
+                    };
+                    //comença lectura del fitxer com a text
+                    reader.readAsText(file, "UTF-8");
+                } catch (error) {
+                    console.error("Error llegint el fitxer CSV:", error);
+                }
+            } else {
+                alert("El fitxer no té l'extensió correcta");
+                return;
+            }
+        });
+    }
+};
+
+
+//-----------------------------------------------------------------
 
 
 //funcio per situar els punts turistics al mapa
