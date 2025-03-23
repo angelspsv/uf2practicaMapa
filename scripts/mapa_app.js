@@ -111,7 +111,7 @@ dropZoneObj.addEventListener("drop", function(event){
 
 // FUNCIONS
 //funcionalitat que carga el fitxer, confirma si fitxer es csv i el llegeix
-/*
+
 const loadFile = function(files){
     //si files no esta buit i esta major a 0
     if(files && files.length > 0){
@@ -201,12 +201,6 @@ const loadFile = function(files){
                     //cridem la funcio asincrona per mostrar la bandera i ciutat dels monuments del fitxer csv processat
                     (async function() {
                         await banderaPais(pais_codi, pais_ciutat);
-
-                        //aqui a mode de prova cridarem el metode asincron de la classe Excel: getInfoCountry(codi, city)
-                        //!! previament s'ha de fer una instancia de la classe Excel
-                        const excel = new Excel();
-                        const infoPais = await excel.getInfoCountry(pais_codi, pais_ciutat);
-                        console.log("Objecte retornat despres d'executar el metode getInfoCountry de la classe Excel: ", infoPais);
                     })();
 
                     console.log(`Els objectes que rebra puntsAlMapa; ${objectesCreats}`);
@@ -225,11 +219,12 @@ const loadFile = function(files){
         });
     }
 }
-*/
+
 
 //----------------- funcio loadFile utilitza la classe Excel------
 
 //funcio que carga, confirma si fitxer es csv i el llegeix
+/*
 const loadFile = function(files) {
     //si files no esta buit i es major a 0
     if (files && files.length > 0) {
@@ -347,7 +342,7 @@ const loadFile = function(files) {
         });
     }
 };
-
+*/
 
 //-----------------------------------------------------------------
 
